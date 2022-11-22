@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         paddingHorizontal: wp(6),
-        paddingVertical: hp(4),
+        marginVertical: 10
     },
     textCenterAlign: {
         textAlign: 'center'
@@ -15,6 +15,7 @@ const styles = StyleSheet.create({
         fontSize: hp(4),
         fontWeight: "bold",
         color: colors.text,
+        marginTop: hp(5),
         marginBottom: hp(2.5)
     },
     subHeading: {

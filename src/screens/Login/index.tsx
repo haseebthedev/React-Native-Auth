@@ -1,20 +1,36 @@
-import React from 'react';
-import {View, Text, Image, TouchableOpacity, ScrollView} from 'react-native';
+import React, {FC} from 'react';
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  ScrollView,
+  StatusBar,
+} from 'react-native';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {StackParamList} from '../../../App';
 import {Formik, Field} from 'formik';
 import {TextField, Button} from '../../components';
+import {ScrenEnum} from '../../enums';
 import {loginValidationSchema} from '../../utils/FormValidations';
-import styles from './styles';
-import {wp} from '../../utils/responsive';
 
+import styles from './styles';
 import googleIcon from '../../assets/icons/googleIcon.png';
 import appleIcon from '../../assets/icons/appleIcon.png';
 import facebookIcon from '../../assets/icons/facebookIcon.png';
 
-export const LoginScreen = () => {
+export const LoginScreen: FC<
+  NativeStackScreenProps<StackParamList, 'Login'>
+> = ({navigation}) => {
   return (
     <ScrollView
       style={styles.container}
       contentContainerStyle={{justifyContent: 'center'}}>
+      <StatusBar
+        barStyle={'dark-content'}
+        translucent
+        backgroundColor={'transparent'}
+      />
       <Text style={[styles.textCenterAlign, styles.heading]}>Hello Again!</Text>
       <Text
         style={[
@@ -28,7 +44,7 @@ export const LoginScreen = () => {
           password: '',
         }}
         validationSchema={loginValidationSchema}
-        onSubmit={values => console.log(values)}>
+        onSubmit={values => navigation.navigate(ScrenEnum.HOME)}>
         {({submitForm}) => (
           <>
             <Field
@@ -88,12 +104,14 @@ export const LoginScreen = () => {
             styles.textCenterAlign,
             styles.memberText,
           ]}>{`Not a member?`}</Text>
-        <Text
-          style={[
-            styles.textCenterAlign,
-            styles.memberText,
-            styles.registerText,
-          ]}>{` Register Now!`}</Text>
+        <TouchableOpacity>
+          <Text
+            style={[
+              styles.textCenterAlign,
+              styles.memberText,
+              styles.registerText,
+            ]}>{` Register Now!`}</Text>
+        </TouchableOpacity>
       </View>
     </ScrollView>
   );
