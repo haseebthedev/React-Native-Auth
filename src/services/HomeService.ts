@@ -1,3 +1,5 @@
+import { Alert } from "react-native";
+
 export const getHomeListing = async () => {
     try {
         const response = await fetch(
@@ -6,6 +8,6 @@ export const getHomeListing = async () => {
         const json = await response.json();
         return json;
     } catch (error) {
-        console.error(error);
+        Alert.alert("Server Down", "Something went wrong with server!")
     }
 }
