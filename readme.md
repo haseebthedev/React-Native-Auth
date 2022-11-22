@@ -1,12 +1,23 @@
 ### Test Task for React Native
 
-Hi,
+Hi, It's Haseeb here!
+
+#### HOW TO RUN
+```
+npm install
+```
+
+then 
+
+```
+npm run android
+```
 
 This is a test task for React Native by Ropstam. This project is completely build from scratch by me.
 
 The project structure is as follows:
 
-#### Entry Point: src
+#### ENTRY POINT: src
 
 - @types
 This contains all types required by modular convensions / packages.
