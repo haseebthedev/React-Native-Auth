@@ -13,7 +13,7 @@ then
 npm run android
 ```
 
-This is a test task for React Native by Ropstam. This project is completely build from scratch by me.
+This is a test task for React Native by Ropstam.
 
 The project structure is as follows:
 
