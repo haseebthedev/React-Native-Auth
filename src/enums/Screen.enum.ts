@@ -1,4 +1,4 @@
-export enum ScrenEnum {
+export enum ScreenEnum {
     LOGIN = "Login",
     HOME = "Home"
 }

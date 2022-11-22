@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, {FC, useRef} from 'react';
 import {
   View,
   Text,
@@ -9,19 +9,39 @@ import {
 } from 'react-native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {StackParamList} from '../../../App';
-import {Formik, Field} from 'formik';
+import {Formik, Field, FormikState} from 'formik';
 import {TextField, Button} from '../../components';
-import {ScrenEnum} from '../../enums';
-import {loginValidationSchema} from '../../utils/FormValidations';
-
+import {ScreenEnum} from '../../enums';
+import {loginValidationSchema} from '../../utils/validations';
+import {UserEmailLogin} from '../../services/AuthService';
+import {setInAsyncStorage} from '../../utils/storage';
 import styles from './styles';
 import googleIcon from '../../assets/icons/googleIcon.png';
 import appleIcon from '../../assets/icons/appleIcon.png';
 import facebookIcon from '../../assets/icons/facebookIcon.png';
 
+interface UserI {
+  email: string;
+  password: string;
+}
+
 export const LoginScreen: FC<
   NativeStackScreenProps<StackParamList, 'Login'>
 > = ({navigation}) => {
+  const _loginHandler = async ({email, password}: UserI) => {
+    let response = await UserEmailLogin(email, password);
+
+    if (response && response._id && response.access_token) {
+      // save response in AsyncStorage for user Session
+      let result = await setInAsyncStorage('USER:SESSION', response);
+
+      // Now, navigate to homepage
+      if (result) {
+        navigation.navigate(ScreenEnum.HOME);
+      }
+    }
+  };
+
   return (
     <ScrollView
       style={styles.container}
@@ -44,7 +64,7 @@ export const LoginScreen: FC<
           password: '',
         }}
         validationSchema={loginValidationSchema}
-        onSubmit={values => navigation.navigate(ScrenEnum.HOME)}>
+        onSubmit={values => _loginHandler(values)}>
         {({submitForm}) => (
           <>
             <Field

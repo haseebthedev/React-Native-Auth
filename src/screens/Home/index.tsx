@@ -1,14 +1,18 @@
 import React, {FC, useState, useEffect} from 'react';
-import {View, Text, FlatList, StatusBar, ActivityIndicator} from 'react-native';
+import {View, FlatList, StatusBar, ActivityIndicator} from 'react-native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {StackParamList} from '../../../App';
 import {Header, ListCard} from '../../components';
-
 import {getHomeListing} from '../../services/HomeService';
+import {colors} from '../../constants/colors';
+import {ScreenEnum} from '../../enums';
+import {removeFromAsyncStorage} from '../../utils/storage';
 import LogoutIcon from '../../assets/icons/logoutIcon.png';
 import styles from './styles';
-import {colors} from '../../constants/colors';
 
+/**
+ * This is the interface for Post
+ */
 interface PostI {
   userId: number;
   id: number;
@@ -20,15 +24,21 @@ export const HomeScreen: FC<NativeStackScreenProps<StackParamList, 'Home'>> = ({
   navigation,
 }) => {
   const [post, setPost] = useState<PostI[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
 
+  /**
+   * This will load the homepage listings by calling getHomeListing() from HomeService.
+   */
   const getHomeListingData = async () => {
-    let data = await getHomeListing(setLoading);
+    let data = await getHomeListing();
     setPost(data);
   };
 
-  const _logoutHandler = () => {
-    navigation.navigate('Login');
+  /**
+   * Remove user session from AsyncStorage and redirect to login screen
+   */
+  const _logoutHandler = async () => {
+    await removeFromAsyncStorage('USER:SESSION');
+    navigation.navigate(ScreenEnum.LOGIN);
   };
 
   useEffect(() => {
