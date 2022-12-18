@@ -13,7 +13,7 @@ then
 npm run android
 ```
 
-This is a test task for React Native by Ropstam.
+This is a test task for React Native to implement auth.
 
 The project structure is as follows:
 
